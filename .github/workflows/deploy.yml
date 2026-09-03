@@ -36,7 +36,12 @@ jobs:
         with:
           server: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USERNAME }}
-          password: ${{ secrets.SFTP_PASSWORD }}
+          # SiteGround SFTP is key-based (it rejects passwords). Auth with the
+          # private key from Site Tools → Devs → SSH Keys Manager.
+          ssh_private_key: ${{ secrets.SFTP_SSH_KEY }}
+          # Only needed if the SiteGround key was created with a passphrase;
+          # leave the secret unset otherwise.
+          ssh_passphrase: ${{ secrets.SFTP_SSH_PASSPHRASE }}
           port: ${{ secrets.SFTP_PORT }}
           local_path: './dist/*'
           remote_path: ${{ secrets.SFTP_REMOTE_PATH }}
