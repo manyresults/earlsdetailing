@@ -1,0 +1,107 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import ContactButtons from "../components/ContactButtons.astro";
+import Icon from "../components/Icon.astro";
+import { site, fullAddress } from "../data/site";
+
+const mapQuery = encodeURIComponent(`${site.name}, ${fullAddress}`);
+const mapEmbed = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+
+const serviceTypes = ["Detailing", "Paint", "Ceramic Coating", "Body & Collision"];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Contact Earl's Proper Detailing in Langhorne, PA. Call or text 215-791-3015, or message us on Facebook to get a free quote or schedule an appointment."
+>
+  <PageHeader
+    eyebrow="Get in touch"
+    title="Contact Us"
+    subtitle="Call or text us for a free quote or to schedule an appointment — we're happy to help."
+  />
+
+  <section class="container-page py-16 sm:py-20">
+    <div class="rounded-2xl border border-line bg-surface p-6 text-center sm:p-10">
+      <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-fg">
+        Ready when you are
+      </h2>
+      <p class="mx-auto mt-3 max-w-xl text-muted">
+        The fastest way to reach us is by phone, text, or Facebook Messenger. Reach out and we'll get
+        you a quote or booked in.
+      </p>
+      <ContactButtons class="mt-7" align="center" />
+    </div>
+
+    <div class="mt-12 grid gap-8 lg:grid-cols-2">
+      <!-- Details -->
+      <div class="space-y-6">
+        <div class="flex items-start gap-4 rounded-xl border border-line bg-surface p-6">
+          <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
+            <Icon name="phone" class="h-6 w-6" />
+          </span>
+          <div>
+            <h3 class="font-display text-lg font-semibold uppercase tracking-wide text-fg">Phone &amp; Text</h3>
+            <p class="mt-1 text-muted">
+              <a href={`tel:${site.phoneRaw}`} class="hover:text-brand">{site.phone}</a>
+            </p>
+            <p class="text-sm text-muted">Call or text — same number.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 rounded-xl border border-line bg-surface p-6">
+          <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
+            <Icon name="pin" class="h-6 w-6" />
+          </span>
+          <div>
+            <h3 class="font-display text-lg font-semibold uppercase tracking-wide text-fg">Location</h3>
+            <p class="mt-1 text-muted">
+              <a href={mapLink} target="_blank" rel="noopener noreferrer" class="hover:text-brand">
+                {site.address.street}<br />
+                {site.address.city}, {site.address.state} {site.address.zip}
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 rounded-xl border border-line bg-surface p-6">
+          <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
+            <Icon name="clock" class="h-6 w-6" />
+          </span>
+          <div>
+            <h3 class="font-display text-lg font-semibold uppercase tracking-wide text-fg">Hours</h3>
+            <p class="mt-1 text-muted">{site.hours}</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 rounded-xl border border-line bg-surface p-6">
+          <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
+            <Icon name="sparkles" class="h-6 w-6" />
+          </span>
+          <div>
+            <h3 class="font-display text-lg font-semibold uppercase tracking-wide text-fg">What can we help with?</h3>
+            <ul class="mt-2 flex flex-wrap gap-2">
+              {
+                serviceTypes.map((s) => (
+                  <li class="rounded-full border border-line px-3 py-1 text-sm text-muted">{s}</li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="overflow-hidden rounded-2xl border border-line">
+        <iframe
+          title={`Map to ${site.name}`}
+          src={mapEmbed}
+          class="h-full min-h-[420px] w-full"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,81 @@
+---
+/**
+ * Reusable <head> SEO block. Every page passes a unique title + description.
+ * Emits: title, meta description, canonical, Open Graph, Twitter Card,
+ * geo meta, and LocalBusiness (AutoDetailing) JSON-LD structured data.
+ */
+import { site } from "../data/site";
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = site.description,
+  image = site.ogImage,
+  type = "website",
+  noindex = false,
+} = Astro.props;
+
+// Build absolute URLs from the current path + configured site.
+const canonicalURL = new URL(Astro.url.pathname, site.url).href;
+const socialImage = new URL(image, site.url).href;
+const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
+
+// LocalBusiness structured data (AutoDetailing is a schema.org LocalBusiness subtype).
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AutoDetailing",
+  "@id": `${site.url}/#business`,
+  name: site.name,
+  image: socialImage,
+  logo: new URL("/favicon.png", site.url).href,
+  url: site.url,
+  telephone: site.phoneRaw,
+  priceRange: site.priceRange,
+  description: site.description,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.state,
+    postalCode: site.address.zip,
+    addressCountry: site.address.country,
+  },
+  areaServed: site.areaServed.map((name) => ({ "@type": "Place", name })),
+  sameAs: [site.social.facebook],
+};
+---
+
+<!-- Primary meta -->
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:image" content={socialImage} />
+<meta property="og:image:alt" content={`${site.name} — ${site.tagline}`} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImage} />
+
+<!-- Geo -->
+<meta name="geo.region" content="US-PA" />
+<meta name="geo.placename" content={site.address.city} />
+
+<!-- Structured data -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

@@ -1,0 +1,94 @@
+---
+import Icon from "./Icon.astro";
+import { site, nav, fullAddress } from "../data/site";
+
+const year = new Date().getFullYear();
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  `${site.name}, ${fullAddress}`
+)}`;
+---
+
+<footer class="border-t border-line bg-ink-2">
+  <div class="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <!-- Brand -->
+    <div class="sm:col-span-2 lg:col-span-1">
+      <p class="font-display text-2xl font-bold uppercase tracking-wide text-fg">
+        Earl's <span class="text-brand">Proper</span>
+      </p>
+      <p class="mt-1 text-sm uppercase tracking-[0.2em] text-muted">Detailing</p>
+      <p class="mt-4 max-w-xs text-sm text-muted">
+        Full-service auto detailing & body work. {site.awards}, {site.experience}.
+      </p>
+      <div class="mt-5 flex gap-3">
+        <a
+          href={site.social.facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-brand hover:text-brand"
+          aria-label="Earl's Proper Detailing on Facebook"
+        >
+          <Icon name="facebook" class="h-5 w-5" />
+        </a>
+        <a
+          href={`sms:${site.phoneRaw}`}
+          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-brand hover:text-brand"
+          aria-label="Text us"
+        >
+          <Icon name="message" class="h-5 w-5" />
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick links -->
+    <div>
+      <h2 class="text-sm font-semibold uppercase tracking-wider text-fg">Explore</h2>
+      <ul class="mt-4 space-y-2">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} class="text-sm text-muted transition-colors hover:text-brand">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <h2 class="text-sm font-semibold uppercase tracking-wider text-fg">Contact</h2>
+      <ul class="mt-4 space-y-3 text-sm text-muted">
+        <li class="flex items-start gap-2">
+          <Icon name="phone" class="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+          <a href={`tel:${site.phoneRaw}`} class="transition-colors hover:text-brand">{site.phone}</a>
+        </li>
+        <li class="flex items-start gap-2">
+          <Icon name="pin" class="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+          <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-brand">
+            {site.address.street}<br />{site.address.city}, {site.address.state} {site.address.zip}
+          </a>
+        </li>
+        <li class="flex items-start gap-2">
+          <Icon name="clock" class="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+          <span>{site.hours}</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Service area -->
+    <div>
+      <h2 class="text-sm font-semibold uppercase tracking-wider text-fg">Service Area</h2>
+      <ul class="mt-4 space-y-2 text-sm text-muted">
+        {site.areaServed.map((area) => <li>{area}</li>)}
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-line">
+    <div class="container-page flex flex-col items-center justify-between gap-2 py-6 text-xs text-muted sm:flex-row">
+      <p>&copy; {year} {site.name}. All rights reserved.</p>
+      <p>{site.tagline} &middot; {site.subTagline}</p>
+    </div>
+  </div>
+</footer>

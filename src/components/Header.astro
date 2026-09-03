@@ -1,0 +1,116 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/images/logo.png";
+import Icon from "./Icon.astro";
+import { site, nav } from "../data/site";
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href);
+---
+
+<header
+  class="fixed inset-x-0 top-0 z-50 border-b border-line/80 bg-ink/85 backdrop-blur-md"
+>
+  <div class="container-page flex h-16 items-center justify-between gap-4">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-3 shrink-0" aria-label={`${site.name} — home`}>
+      <Image src={logo} alt={`${site.name} logo`} height={40} class="h-10 w-auto" loading="eager" />
+      <span class="sr-only">{site.name}</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "rounded-md px-3 py-2 text-sm font-medium transition-colors",
+              isActive(item.href)
+                ? "text-brand"
+                : "text-muted hover:text-fg",
+            ]}
+            aria-current={isActive(item.href) ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href={`tel:${site.phoneRaw}`} class="btn btn-primary hidden text-sm sm:inline-flex">
+        <Icon name="phone" class="h-4 w-4" />
+        <span class="hidden md:inline">{site.phone}</span>
+        <span class="md:hidden">Call</span>
+      </a>
+
+      <!-- Mobile menu toggle -->
+      <button
+        id="menu-toggle"
+        type="button"
+        class="inline-flex items-center justify-center rounded-md p-2 text-fg lg:hidden"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span data-icon="menu"><Icon name="menu" class="h-6 w-6" /></span>
+        <span data-icon="close" class="hidden"><Icon name="x" class="h-6 w-6" /></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu panel -->
+  <nav
+    id="mobile-menu"
+    class="hidden border-t border-line bg-ink-2 lg:hidden"
+    aria-label="Mobile"
+  >
+    <div class="container-page flex flex-col py-3">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "rounded-md px-3 py-3 text-base font-medium transition-colors",
+              isActive(item.href) ? "text-brand" : "text-fg hover:bg-surface",
+            ]}
+            aria-current={isActive(item.href) ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a href={`tel:${site.phoneRaw}`} class="btn btn-primary mt-2">
+        <Icon name="phone" class="h-5 w-5" />
+        Call {site.phone}
+      </a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  const menuIcon = toggle?.querySelector('[data-icon="menu"]');
+  const closeIcon = toggle?.querySelector('[data-icon="close"]');
+
+  toggle?.addEventListener("click", () => {
+    const open = menu?.classList.toggle("hidden") === false;
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    menuIcon?.classList.toggle("hidden", open);
+    closeIcon?.classList.toggle("hidden", !open);
+  });
+
+  // Close the menu after tapping a link.
+  menu?.querySelectorAll("a").forEach((link) =>
+    link.addEventListener("click", () => {
+      menu.classList.add("hidden");
+      toggle?.setAttribute("aria-expanded", "false");
+      menuIcon?.classList.remove("hidden");
+      closeIcon?.classList.add("hidden");
+    })
+  );
+</script>

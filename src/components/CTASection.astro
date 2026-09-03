@@ -1,0 +1,27 @@
+---
+import ContactButtons from "./ContactButtons.astro";
+import { site, fullAddress } from "../data/site";
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+const {
+  title = "Ready for that show car shine?",
+  subtitle = "Get a free quote or book your appointment — call, text, or message us on Facebook.",
+} = Astro.props;
+---
+
+<section class="border-y border-line bg-surface">
+  <div class="container-page py-16 text-center">
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-brand">
+      {site.tagline}
+    </p>
+    <h2 class="mt-3 font-display text-3xl font-bold uppercase tracking-wide text-fg sm:text-4xl">
+      {title}
+    </h2>
+    <p class="mx-auto mt-3 max-w-xl text-muted">{subtitle}</p>
+    <ContactButtons class="mt-8" align="center" />
+    <p class="mt-6 text-sm text-muted">{fullAddress}</p>
+  </div>
+</section>

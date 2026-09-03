@@ -1,0 +1,59 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import ContactButtons from "../components/ContactButtons.astro";
+import Icon from "../components/Icon.astro";
+import { specials, site } from "../data/site";
+import ceramicImg from "../assets/images/ceramic-special.png";
+---
+
+<BaseLayout
+  title="Specials"
+  description="Current specials and deals from Earl's Proper Detailing in Langhorne, PA — including our Ceramic Coating Sale. Packages start at $800, mention this ad for 10% off."
+>
+  <PageHeader
+    eyebrow="Deals & offers"
+    title="Earl's Proper Specials"
+    subtitle="Bookmark this page so you can take advantage of our monthly special deals. Don't miss out — these offers won't be around for long!"
+  />
+
+  <section class="container-page py-16 sm:py-20">
+    {
+      specials.map((special) => (
+        <article class="overflow-hidden rounded-2xl border border-line bg-surface">
+          <div class="grid gap-0 lg:grid-cols-2">
+            <div class="order-2 flex flex-col justify-center p-8 sm:p-10 lg:order-1">
+              <span class="inline-flex w-fit items-center gap-1 rounded-full bg-brand/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-light">
+                <Icon name="star" class="h-3.5 w-3.5" fill="currentColor" strokeWidth={0} /> {special.badge}
+              </span>
+              <h2 class="mt-4 font-display text-3xl font-bold uppercase tracking-wide text-fg sm:text-4xl">
+                {special.title}
+              </h2>
+              <p class="mt-4 leading-relaxed text-muted">{special.description}</p>
+              <p class="mt-6 font-display text-2xl font-bold uppercase tracking-wide text-fg">
+                {special.price}
+              </p>
+              <p class="mt-1 text-brand-light">{special.offer}</p>
+              <ContactButtons class="mt-8" />
+            </div>
+            <div class="order-1 border-b border-line lg:order-2 lg:border-b-0 lg:border-l">
+              <Image
+                src={ceramicImg}
+                alt={`Earl's Proper Detailing — ${special.title}`}
+                class="h-full w-full object-cover"
+                loading="lazy"
+                widths={[500, 900]}
+                sizes="(min-width: 1024px) 45vw, 100vw"
+              />
+            </div>
+          </div>
+        </article>
+      ))
+    }
+
+    <p class="mt-10 text-center text-muted">
+      Have a question about an offer? <a href={`tel:${site.phoneRaw}`} class="font-semibold text-brand hover:text-brand-light">Call or text {site.phone}</a>.
+    </p>
+  </section>
+</BaseLayout>

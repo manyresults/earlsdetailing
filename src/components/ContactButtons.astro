@@ -1,0 +1,42 @@
+---
+/**
+ * Primary contact actions for a static site: Call, Text (SMS), and Facebook
+ * Messenger. These replace the old WordPress forms — the current business
+ * funnels every lead through phone / text / Facebook.
+ */
+import Icon from "./Icon.astro";
+import { site } from "../data/site";
+
+interface Props {
+  class?: string;
+  align?: "start" | "center";
+}
+const { class: className = "", align = "start" } = Astro.props;
+---
+
+<div
+  class:list={[
+    "flex flex-wrap gap-3",
+    align === "center" ? "justify-center" : "justify-start",
+    className,
+  ]}
+>
+  <a href={`tel:${site.phoneRaw}`} class="btn btn-primary" aria-label={`Call ${site.name} at ${site.phone}`}>
+    <Icon name="phone" class="w-5 h-5" />
+    Call {site.phone}
+  </a>
+  <a href={`sms:${site.phoneRaw}`} class="btn btn-outline" aria-label="Text us">
+    <Icon name="message" class="w-5 h-5" />
+    Text Us
+  </a>
+  <a
+    href={site.social.messenger}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn btn-outline"
+    aria-label="Message us on Facebook Messenger"
+  >
+    <Icon name="facebook" class="w-5 h-5" />
+    Messenger
+  </a>
+</div>

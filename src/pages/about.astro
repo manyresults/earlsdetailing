@@ -1,0 +1,101 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import CTASection from "../components/CTASection.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site";
+import teamImg from "../assets/images/team.jpg";
+
+const differentiators = [
+  {
+    title: "20+ Years of Professional Experience",
+    desc: "Two decades of hands-on detailing and body work on every kind of vehicle.",
+    icon: "clock",
+  },
+  {
+    title: "Professional-Grade Products & Fair Prices",
+    desc: "We use only the best quality products and equipment — at competitive prices.",
+    icon: "shield",
+  },
+  {
+    title: "A Trusted Local Business",
+    desc: "We take pride in the solid customer relationships we've built. Our longevity is a testament to our commitment to our customers.",
+    icon: "pin",
+  },
+  {
+    title: "Four-Time Best of Bucks Winner",
+    desc: "Recognized by our community with four consecutive Best of Bucks awards.",
+    icon: "award",
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description="About Earl's Proper Detailing — a trusted local auto detailing and body shop in Langhorne, PA with 20+ years of experience and four consecutive Best of Bucks awards."
+>
+  <PageHeader eyebrow="About us" title="Proper Is the Only Option" />
+
+  <section class="container-page py-16 sm:py-20">
+    <div class="grid items-center gap-12 lg:grid-cols-2">
+      <div class="overflow-hidden rounded-2xl border border-line">
+        <Image
+          src={teamImg}
+          alt="The Earl's Proper Detailing team"
+          class="h-full w-full object-cover"
+          loading="lazy"
+          widths={[500, 900]}
+          sizes="(min-width: 1024px) 45vw, 90vw"
+        />
+      </div>
+      <div>
+        <h2 class="font-display text-3xl font-bold uppercase tracking-wide text-fg">
+          About Earl's Proper Detailing
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-muted">
+          Why waste time with anything else? Earl's Proper Detailing is the perfect choice for
+          anyone looking for a comprehensive and professional car detailing service.
+        </p>
+        <p class="mt-4 leading-relaxed text-muted">
+          Our team of experienced technicians has the knowledge and expertise to provide a thorough,
+          detailed cleaning for any vehicle. We use only the best quality products and equipment to
+          ensure that your car looks its absolute best.
+        </p>
+        <div class="mt-8">
+          <a href="/contact/" class="btn btn-primary">
+            Contact Us Today <Icon name="arrow" class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-line bg-ink-2">
+    <div class="container-page py-16 sm:py-20">
+      <h2 class="font-display text-3xl font-bold uppercase tracking-wide text-fg">
+        Why Choose Earl's Proper Detailing?
+      </h2>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2">
+        {
+          differentiators.map((d) => (
+            <div class="flex gap-4 rounded-xl border border-line bg-surface p-6">
+              <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
+                <Icon name={d.icon} class="h-6 w-6" />
+              </span>
+              <div>
+                <h3 class="font-display text-lg font-semibold uppercase tracking-wide text-fg">{d.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-muted">{d.desc}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    title="Experience the Earl's Proper difference"
+    subtitle={`Serving ${site.areaServed.join(", ")}. Call or text to get started.`}
+  />
+</BaseLayout>
