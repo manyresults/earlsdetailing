@@ -1,7 +1,8 @@
-name: Build & Deploy to SiteGround
+name: Build & Deploy
 
-# Deploys the built static site to SiteGround over SFTP on every push to main.
-# Credentials are pulled from GitHub repo Secrets — nothing sensitive lives here.
+# Builds the static site and deploys it to the web server over SFTP on every
+# push to main. Credentials are pulled from GitHub repo Secrets — nothing
+# sensitive lives in this file.
 on:
   push:
     branches: [main]
@@ -31,17 +32,12 @@ jobs:
       - name: Build site (Astro → dist/)
         run: npm run build
 
-      - name: Deploy dist/ to SiteGround via SFTP
+      - name: Deploy dist/ to server via SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
           server: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USERNAME }}
-          # SiteGround SFTP is key-based (it rejects passwords). Auth with the
-          # private key from Site Tools → Devs → SSH Keys Manager.
-          ssh_private_key: ${{ secrets.SFTP_SSH_KEY }}
-          # Only needed if the SiteGround key was created with a passphrase;
-          # leave the secret unset otherwise.
-          ssh_passphrase: ${{ secrets.SFTP_SSH_PASSPHRASE }}
+          password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
           local_path: './dist/*'
           remote_path: ${{ secrets.SFTP_REMOTE_PATH }}
