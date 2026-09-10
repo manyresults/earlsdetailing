@@ -5,8 +5,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ContactButtons from "../components/ContactButtons.astro";
 import ServicesGrid from "../components/ServicesGrid.astro";
 import CTASection from "../components/CTASection.astro";
+import MemorialNotice from "../components/MemorialNotice.astro";
 import Icon from "../components/Icon.astro";
-import { site, detailingServices, vehicleTypes } from "../data/site";
+import { site, detailingServices, vehicleTypes, memorial } from "../data/site";
 
 import heroImg from "../assets/images/work/work-06.jpg";
 import ceramicImg from "../assets/images/ceramic-special.png";
@@ -40,6 +41,8 @@ const reasons = [
   title={site.name}
   description="Auto detailing in Langhorne, PA. Washing, waxing, polishing, ceramic coating, paint & body work. 20+ years of experience and four consecutive Best of Bucks awards."
 >
+  {memorial.enabled && <MemorialNotice />}
+
   <!-- Hero -->
   <section class="relative isolate overflow-hidden">
     <Image

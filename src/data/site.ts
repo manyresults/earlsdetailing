@@ -166,3 +166,42 @@ export const specials: Special[] = [
 
 /** Convenience: formatted single-line address. */
 export const fullAddress = `${site.address.street}, ${site.address.city}, ${site.address.state} ${site.address.zip}`;
+
+/**
+ * In-memoriam / announcement banner shown above the homepage hero.
+ * Set `enabled: false` to take it down (e.g. after the services) without
+ * removing the content.
+ */
+export const memorial = {
+  enabled: true,
+  eyebrow: "In Loving Memory",
+  name: "Earl Roberts",
+  subtitle: "Founder & Owner of Earl's Proper Detailing",
+  // Announcement paragraphs. NOTE: the 4th paragraph completes a sentence that
+  // was cut off in the source ("...navigating an unimagin…") — verify wording.
+  message: [
+    "It is with tremendous sadness that we share the passing of Earl Roberts, founder and owner of Earl's Proper Detailing.",
+    "For more than 25 years, Earl poured his heart into this business and the community it served. He first started Earl's Proper Detailing in the 1990s and, after stepping away for a number of years, rebuilt the business from the ground up in 2013. What started again from the carport of his family home eventually grew back into the shop so many of you came to know.",
+    "Earl took great pride in his work, but even more pride in the relationships he built along the way. To him, customers often became friends, and the support this community showed his business over the years meant more to him than most people probably realized.",
+    "His passing was sudden, and his family is now navigating an unimaginable loss.",
+    "All are welcome to stop by and pay their respects to Earl Roberts as we celebrate his life and the impact he had on so many people in our community.",
+  ],
+  // The reassurance that follows the service details.
+  closing: [
+    "Earl's Proper Detailing remains open and operating. Earl put more than 25 years into building this business, and our team is committed to keeping it going — and to continuing to take care of the customers who supported him throughout the years.",
+    "We currently have appointments available. To schedule a detail, please call or text 215-791-3015.",
+    "Thank you again for all of the kindness, patience, and support you've shown the Roberts family and the Earl's Proper Detailing team during this difficult time.",
+  ],
+  serviceHeading: "Celebration of Life",
+  serviceDate: "Saturday, September 12, 2026",
+  events: [
+    { title: "Visitation", time: "9:00 – 11:00 AM (Eastern)" },
+    { title: "Funeral Service", time: "12:00 – 1:00 PM (Eastern)" },
+  ],
+  venue: {
+    name: "Galzerano Funeral Home – Levittown",
+    address: "3500 Bristol–Oxford Valley Road, Levittown, PA 19057",
+  },
+  dressNote:
+    "To honor Earl, the family kindly requests that those attending wear Earl's Proper Detailing merchandise, or a jersey representing their favorite Philadelphia sports team.",
+};
