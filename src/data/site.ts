@@ -179,11 +179,9 @@ export const memorial = {
   subtitle: "Founder & Owner of Earl's Proper Detailing",
   // Optional images, served from /img/ (repo public/img/ or uploaded to the
   // server's public/img/ folder). Leave "" to fall back to the text header.
-  // Set these back to "/img/earl-memorial-banner.jpg" and "/img/earl-portrait.jpg"
-  // once the files are uploaded to the server's public/img/ folder. Empty =
-  // dignified text header, no broken images.
-  bannerImage: "",
-  portraitImage: "",
+  // Uploaded to the server's public/_astro/ folder (kept by delete_remote_files:false).
+  bannerImage: "/_astro/earlheader.png", // wide "In Loving Memory" graphic
+  portraitImage: "/_astro/earlRIP.png", // photo of Earl
   // Announcement paragraphs. NOTE: the 4th paragraph completes a sentence that
   // was cut off in the source ("...navigating an unimagin…") — verify wording.
   message: [
