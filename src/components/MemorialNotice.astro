@@ -62,51 +62,54 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
       {memorial.message.map((p) => <p>{p}</p>)}
     </div>
 
-    <!-- Service details -->
-    <div class="mx-auto mt-12 max-w-3xl rounded-2xl border border-line bg-surface p-6 sm:p-8">
-      <div class="text-center">
-        <p class="font-display text-2xl font-bold uppercase tracking-wide text-fg">
-          {memorial.serviceHeading}
-        </p>
-        <p class="mt-2 flex items-center justify-center gap-2 text-muted">
-          <Icon name="calendar" class="h-4 w-4 text-brand" />
-          {memorial.serviceDate}
-        </p>
-      </div>
+    <!-- Service details (shown only while memorial.showServices is true) -->
+    {
+      memorial.showServices && (
+        <div class="mx-auto mt-12 max-w-3xl rounded-2xl border border-line bg-surface p-6 sm:p-8">
+          <div class="text-center">
+            <p class="font-display text-2xl font-bold uppercase tracking-wide text-fg">
+              {memorial.serviceHeading}
+            </p>
+            <p class="mt-2 flex items-center justify-center gap-2 text-muted">
+              <Icon name="calendar" class="h-4 w-4 text-brand" />
+              {memorial.serviceDate}
+            </p>
+          </div>
 
-      <div class="mt-6 grid gap-4 sm:grid-cols-2">
-        {
-          memorial.events.map((ev) => (
-            <div class="rounded-xl border border-line bg-ink-2 p-5 text-center">
-              <h3 class="font-display text-lg font-semibold uppercase tracking-wide text-brand-light">
-                {ev.title}
-              </h3>
-              <p class="mt-2 flex items-center justify-center gap-2 text-fg">
-                <Icon name="clock" class="h-4 w-4 text-muted" />
-                {ev.time}
-              </p>
-            </div>
-          ))
-        }
-      </div>
+          <div class="mt-6 grid gap-4 sm:grid-cols-2">
+            {memorial.events.map((ev) => (
+              <div class="rounded-xl border border-line bg-ink-2 p-5 text-center">
+                <h3 class="font-display text-lg font-semibold uppercase tracking-wide text-brand-light">
+                  {ev.title}
+                </h3>
+                <p class="mt-2 flex items-center justify-center gap-2 text-fg">
+                  <Icon name="clock" class="h-4 w-4 text-muted" />
+                  {ev.time}
+                </p>
+              </div>
+            ))}
+          </div>
 
-      <a
-        href={mapsUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="mt-4 flex items-start justify-center gap-2 rounded-xl border border-line bg-ink-2 p-5 text-center transition-colors hover:border-brand/60"
-      >
-        <Icon name="pin" class="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-        <span class="text-fg">
-          <span class="font-semibold">{memorial.venue.name}</span><br />
-          <span class="text-muted">{memorial.venue.address}</span>
-        </span>
-      </a>
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-4 flex items-start justify-center gap-2 rounded-xl border border-line bg-ink-2 p-5 text-center transition-colors hover:border-brand/60"
+          >
+            <Icon name="pin" class="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+            <span class="text-fg">
+              <span class="font-semibold">{memorial.venue.name}</span>
+              <br />
+              <span class="text-muted">{memorial.venue.address}</span>
+            </span>
+          </a>
 
-      <p class="mt-6 border-t border-line pt-6 text-center text-sm italic leading-relaxed text-muted">
-        {memorial.dressNote}
-      </p>
-    </div>
+          <p class="mt-6 border-t border-line pt-6 text-center text-sm italic leading-relaxed text-muted">
+            {memorial.dressNote}
+          </p>
+        </div>
+      )
+    }
 
     <!-- Closing / still open -->
     <div class="mx-auto mt-12 max-w-2xl space-y-4 text-center text-[15px] leading-relaxed text-muted sm:text-base">
